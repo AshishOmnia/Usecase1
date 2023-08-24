@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { withTaskContext } from '@twilio/flex-ui';
 import { Theme } from '@twilio-paste/core/theme';
-import './styles.css'; 
-
+import './styles.css';
+import axios from 'axios';
 
 const Jplugin = (props) => {
 
@@ -102,6 +102,22 @@ const closePopup = () => {
   setShowDetailsPopup(false);
 };
 
+const [jiraTicketCreated, setJiraTicketCreated] = useState(false);
+
+
+const createJiraTicket = () => {
+  axios
+    .post('https://jiracall-8517.twil.io/createJiraTicket.js')
+    .then((response) => {
+      console.log('Jira ticket created:', response.data);
+      setJiraTicketCreated(true);
+      // Handle success or display a message to the user
+    })
+    .catch((error) => {
+      console.error('Error creating Jira ticket:', error);
+      // Handle error or display an error message to the user
+    });
+};
 
 return (
 <Theme.Provider theme="default">
@@ -139,7 +155,8 @@ return (
               <button onClick={closePopup}>Close</button>
               <div style={{ marginTop: '20px' }}>
                 <p>If issue not resolved with above recommendation. Please submit a ticket.</p>
-                <button>Submit a ticket</button>
+                <button onClick={createJiraTicket}>Submit a ticket</button>
+                {jiraTicketCreated && <p style={{ color: 'green' }}>Jira ticket created successfully!</p>}
               </div>
             </div>
           )}
