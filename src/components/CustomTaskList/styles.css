@@ -16,7 +16,7 @@
   }
   
   .dropdowns {
-    background-color: #000000;
+    background-color: #202020;
     color: #ffffff;
     padding: 10px;
     border-radius: 5px; /* Added border radius */
@@ -46,6 +46,19 @@
   
   .popup-details {
     margin-bottom: 15px; /* Added margin between details and button */
+  }
+
+  .popup button{
+    background-Color: #5d96bc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .popup button:hover {
+    background-color: #007acc; 
   }
   
   button {

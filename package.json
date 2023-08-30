@@ -1,6 +1,6 @@
 {
   "name": "Usecase1",
-  "version": "8.0.0",
+  "version": "6.0.0",
   "private": true,
   "scripts": {
     "postinstall": "flex-plugin pre-script-check"

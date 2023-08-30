@@ -15,28 +15,28 @@ const reasonsData = [
       {
         id: 11,
         title: ' Not able to login with credentials',
-        details: 'check the app version, uninstall and reinstall, clear the cache, check the phone update, if are you able to login to DE web then they should login with same credentials. ',
+        details: 'Check the app version, uninstall and reinstall, clear the cache, check the phone update, if are you able to login to DE web then they should login with same credentials. ',
       },
     ],
   },
   {
     id: 2,
-    title: 'Online Banking (DE web)',
+    title: 'Online Banking',
     subReasons: [
       {
         id: 21,
         title: 'Not able to login',
-        details: 'Details about Sub-Reason 2.1...',
+        details: 'Please try verifying credentials, resetting passwords, checking for account lockouts, trying different browsers or apps, and clearing cache/cookies, stable internet, and disabled security software.',
       },
       {
         id: 22,
         title: 'Not able to register',
-        details: 'Details about Sub-Reason 2.2...',
+        details: 'Please try enter accurate details, checking for lockouts, utilizing different browsers or apps, and clearing cache/cookies. Verifying two-factor authentication and stable internet',
       },
       {
         id: 23,
         title: 'Not able to receive the verification code',
-        details: 'Details about Sub-Reason 2.3...',
+        details: 'Please try checking entered contact details, ensuring network stability, and if you are reachable.',
       },
     ],
   },
@@ -46,18 +46,18 @@ const reasonsData = [
     subReasons: [
       {
         id: 31,
-        title: 'Rewards transaction not seen',
-        details: 'Details about Sub-Reason 2.1...',
+        title: 'Not able to login to rewards',
+        details: 'Please conform proper login, checking transaction history filters, and refreshing the page.',
       },
       {
         id: 32,
         title: 'Missing rewards',
-        details: 'Details about Sub-Reason 2.2...',
+        details: 'Please ensure you are logged in correctly, review transaction history filters, and refresh the page.',
       },
       {
         id: 33,
         title: 'Unable to redeem',
-        details: 'Details about Sub-Reason 2.3...',
+        details: 'Please ensure you meet redemption criteria, checking for available options, and confirming your account status',
       },
     ],
   },
@@ -68,17 +68,17 @@ const reasonsData = [
       {
         id: 41,
         title: 'Not receiving the alerts',
-        details: 'Details about Sub-Reason 2.1...',
+        details: 'Please can you confirm accurate contact information, ensuring notification settings are enabled, and checking spam folders. Verifying connectivity and settings within the banking platform is important',
       },
       {
         id: 42,
         title: 'unable to set up alerts',
-        details: 'Details about Sub-Reason 2.2...',
+        details: 'Please ensure correct notification preferences, and verifying contact information accuracy. Double-checking internet connectivity and adhering to platform guidelines is crucial',
       },
       {
         id: 43,
         title: 'Not able verify the phone number',
-        details: 'Details about Sub-Reason 2.3...',
+        details: `Can you confirm the entered number's accuracy, ensuring it's reachable, and checking for any formatting requirements. Requesting a verification code resend or trying an alternative verification method could be useful.`,
       },
     ],
   },
@@ -102,20 +102,19 @@ const closePopup = () => {
   setShowDetailsPopup(false);
 };
 
-const [jiraTicketCreated, setJiraTicketCreated] = useState(false);
+const [jiraTicketResponse, setJiraTicketResponse] = useState(null);
 
 
 const createJiraTicket = () => {
   axios
-    .post('https://jiracall-8517.twil.io/createJiraTicket.js')
+    .post('https://ashish-5111.twil.io/jiraticket')
     .then((response) => {
       console.log('Jira ticket created:', response.data);
-      setJiraTicketCreated(true);
-      // Handle success or display a message to the user
+      setJiraTicketResponse(response.data);
     })
     .catch((error) => {
       console.error('Error creating Jira ticket:', error);
-      // Handle error or display an error message to the user
+      setJiraTicketResponse('Error creating Jira ticket');
     });
 };
 
@@ -125,6 +124,7 @@ return (
     <div className="container">
       <div className="customer-details">
         <p>Customer Information</p>
+        <div style={{ marginTop: '15px' }}/>
         <p>{props?.task?.attributes?.CustomerData?.Customer[0]?.fullname}</p>
         <p>{props?.task?.attributes?.CustomerData?.Customer[0]?.emailaddress}</p>
       </div>
@@ -156,7 +156,10 @@ return (
               <div style={{ marginTop: '20px' }}>
                 <p>If issue not resolved with above recommendation. Please submit a ticket.</p>
                 <button onClick={createJiraTicket}>Submit a ticket</button>
-                {jiraTicketCreated && <p style={{ color: 'green' }}>Jira ticket created successfully!</p>}
+                <div style={{ marginTop: '10px' }}/>
+                {jiraTicketResponse && (
+                <p style={{ color: 'green' }}>{jiraTicketResponse}</p>
+              )}
               </div>
             </div>
           )}
